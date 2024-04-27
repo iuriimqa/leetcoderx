@@ -71,16 +71,16 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await database("users").where({ email}).first();
+  const user = await database("users").where({email}).first();
 
   if (!user) {
-    return res.status(401).json({ error: "Invalid email or password" });
+    return res.status(401).json({ error: "Invalid email" });
   }
 
   const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
-    return res.status(401).json({ error: "Invalid email or password" });
+    return res.status(401).json({ error: "Invalid password" });
   }
 
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
