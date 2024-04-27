@@ -71,7 +71,7 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await database("users").where({ email, password }).first();
+  const user = await database("users").where({ email}).first();
 
   if (!user) {
     return res.status(401).json({ error: "Invalid email or password" });
